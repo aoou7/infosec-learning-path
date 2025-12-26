@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoSec Learning Path Navigator</title>
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-blue: #4cc9f0;
+            --accent-light-blue: #90e0ef;
+            --accent-red: #e94560;
+            --text-light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: var(--accent-blue);
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-light-blue);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        .control-panel {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-panel {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 2px solid #4361ee;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            background: rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-red) 0%, #d1345e 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .disclaimer-box {
+            background: rgba(233, 69, 96, 0.12);
+            padding: 1.2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-red);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .path-title {
+            color: var(--accent-blue);
+            border-bottom: 2px solid rgba(67, 97, 238, 0.5);
+            padding-bottom: 1rem;
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-badge {
+            background: rgba(155, 89, 182, 0.3);
+            color: #bb86fc;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .step-list {
+            list-style: none;
+            margin-bottom: 2.2rem;
+        }
+
+        .step-list li {
+            background: rgba(67, 97, 238, 0.12);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 0.8rem;
+            border-radius: 10px;
+            border-left: 5px solid #4361ee;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .step-list li:hover {
+            transform: translateX(5px);
+            background: rgba(67, 97, 238, 0.2);
+        }
+
+        .section-title {
+            color: var(--accent-blue);
+            margin: 2rem 0 1.2rem 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.8rem;
+        }
+
+        .tag {
+            background: rgba(233, 69, 96, 0.2);
+            color: #ff99ac;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(233, 69, 96, 0.4);
+        }
+
+        .tag-lab {
+            background: rgba(76, 201, 240, 0.2);
+            color: var(--accent-light-blue);
+            border-color: rgba(76, 201, 240, 0.4);
+        }
+
+        .learning-tip {
+            background: rgba(76, 201, 240, 0.12);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .welcome-screen h2 {
+            color: var(--accent-blue);
+            margin-bottom: 1.2rem;
+            font-size: 2rem;
+        }
+
+        .feature-box {
+            background: rgba(76, 201, 240, 0.12);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2.5rem;
+            text-align: left;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-link {
+            color: var(--accent-light-blue);
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 InfoSec Learning Path Navigator</h1>
+            <p class="subtitle">A guided learning system for cybersecurity students and professionals</p>
+            <p class="tagline">Powered by AI | Aggregated Learning Resources & Practice Platforms</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="control-panel">
+                <label for="pathSelector">Select Your InfoSec Focus Area:</label>
+                <select id="pathSelector">
+                    <option value="">-- Choose a Path --</option>
+                    <option value="pentest">🔍 Penetration Testing & Vulnerability Research</option>
+                    <option value="devsecops">💻 Secure Development & DevSecOps</option>
+                    <option value="netsec">🌐 Network Security & Defense</option>
+                    <option value="crypto">🔐 Cryptography & Application Security</option>
+                    <option value="reverse">⚙️ Reverse Engineering & Malware Analysis</option>
+                    <option value="forensics">🚨 Incident Response & Digital Forensics</option>
+                </select>
+
+                <button class="btn-generate" id="generateBtn">
+                    🚀 Generate Learning Path
+                </button>
+
+                <div class="disclaimer-box">
+                    <strong>⚠️ Ethical Security Disclaimer:</strong><br>
+                    Tools and techniques recommended here are intended for legal security testing, authorized research, and educational purposes only.
+                </div>
+            </div>
+
+            <div class="result-panel" id="resultPanel">
+                <div class="welcome-screen">
+                    <h2>Welcome to the InfoSec Navigator</h2>
+                    <p>Select a focus area from the left panel and click "Generate Learning Path" to begin.</p>
+                    <p>Get personalized learning steps, tool recommendations, and hands-on lab resources.</p>
+
+                    <div class="feature-box">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">🎯 System Features</h3>
+                        <ul class="feature-list">
+                            <li>Covers 6 core cybersecurity domains</li>
+                            <li>Personalized, structured learning paths</li>
+                            <li>Curated toolkits and practice platforms</li>
+                            <li>Responsive design for all devices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 InfoSec Learning Path Navigator | Built with AI Assistance | For Educational Purposes</p>
+            <p>This project is part of an intelligent agent assignment.</p>
+        </footer>
+    </div>
+
+    <script>
+        // InfoSec learning paths data - English version
+        const securityPaths = {
+            pentest: {
+                title: "🔍 Penetration Testing & Vulnerability Research",
+                steps: [
+                    "1. Networking Fundamentals & Protocol Analysis (TCP/IP, HTTP/HTTPS)",
+                    "2. Operating System Security (Windows/Linux hardening)",
+                    "3. Web Application Security (OWASP Top 10: SQLi, XSS, CSRF)",
+                    "4. Penetration Testing Tools (Nmap, Burp Suite, Metasploit)",
+                    "5. Vulnerability Scanning & Manual Exploitation",
+                    "6. Internal Network & Privilege Escalation",
+                    "7. Reporting & Remediation Guidance",
+                    "8. Hands-on Practice: HackTheBox, TryHackMe, VulnHub"
+                ],
+                tools: ["Burp Suite Professional", "Nmap", "Metasploit Framework", "Wireshark", "SQLMap", "John the Ripper"],
+                labs: ["HackTheBox", "TryHackMe", "PentesterLab", "PortSwigger Web Security Academy"]
+            },
+            devsecops: {
+                title: "💻 Secure Development & DevSecOps",
+                steps: [
+                    "1. Secure Coding Standards & Best Practices",
+                    "2. Secure Software Development Lifecycle (SDLC)",
+                    "3. SAST/DAST/SCA Tooling (SonarQube, Snyk, Checkmarx)",
+                    "4. API Security Design & Testing",
+                    "5. Container & Cloud-Native Security",
+                    "6. CI/CD Security Integration",
+                    "7. Threat Modeling & Security Architecture",
+                    "8. Hands-on: OWASP WebGoat, Juice Shop"
+                ],
+                tools: ["SonarQube", "Snyk", "Checkmarx", "OWASP ZAP", "Trivy", "Git Secrets"],
+                labs: ["SecureCodeWarrior", "OWASP Juice Shop", "Snyk Learn"]
+            },
+            netsec: {
+                title: "🌐 Network Security & Defense",
+                steps: [
+                    "1. Deep Dive into Network Protocols",
+                    "2. Firewall, IDS/IPS Configuration & Management",
+                    "3. VPN & Secure Tunneling Technologies",
+                    "4. Network Traffic Analysis & Threat Hunting",
+                    "5. Zero Trust Architecture (ZTA) Principles",
+                    "6. DDoS Mitigation Strategies",
+                    "7. Wireless & IoT Security",
+                    "8. Hands-on: Security Onion, Wireshark Analysis"
+                ],
+                tools: ["Wireshark", "Zeek (Bro)", "Snort", "Suricata", "Nessus", "pfSense"],
+                labs: ["CyberDefenders", "SANS NetWars", "HELLO Firewall Labs"]
+            },
+            crypto: {
+                title: "🔐 Cryptography & Application Security",
+                steps: [
+                    "1. Symmetric & Asymmetric Encryption Fundamentals",
+                    "2. Hash Functions & Digital Signatures",
+                    "3. PKI & Digital Certificates",
+                    "4. SSL/TLS Protocol Deep Dive",
+                    "5. Blockchain & Cryptocurrency Security",
+                    "6. Side-Channel Attacks & Countermeasures",
+                    "7. Privacy-Enhancing Technologies",
+                    "8. Practice: Cryptopals Crypto Challenges"
+                ],
+                tools: ["OpenSSL", "GnuPG", "Hashcat", "Cryptool", "Wireshark (TLS)", "testssl.sh"],
+                labs: ["Cryptopals", "CryptoHack", "NahamSec Cryptography"]
+            },
+            reverse: {
+                title: "⚙️ Reverse Engineering & Malware Analysis",
+                steps: [
+                    "1. Assembly Language Basics (x86/x64, ARM)",
+                    "2. Debugger Usage (GDB, WinDbg, x64dbg)",
+                    "3. Disassembly Tools (IDA Pro, Ghidra, Binary Ninja)",
+                    "4. Software Protection & Anti-Reversing",
+                    "5. Malware Behavioral Analysis",
+                    "6. Vulnerability Analysis & Patch Diffing",
+                    "7. Mobile App Reverse Engineering",
+                    "8. Practice: Crackmes, Malware Traffic Analysis"
+                ],
+                tools: ["IDA Pro", "Ghidra", "x64dbg", "Radare2", "Binary Ninja", "JADX", "Frida"],
+                labs: ["Crackmes.one", "Reverse Engineering Challenges", "Malware-Traffic-Analysis.net"]
+            },
+            forensics: {
+                title: "🚨 Incident Response & Digital Forensics",
+                steps: [
+                    "1. Incident Response Frameworks (NIST, SANS)",
+                    "2. Host-Based Forensics (Memory, Disk, Logs)",
+                    "3. Network Forensics (PCAP Analysis)",
+                    "4. Malware Forensics & Analysis",
+                    "5. Cloud Environment Incident Response",
+                    "6. Threat Intelligence & IOC Management",
+                    "7. Legal & Compliance Considerations",
+                    "8. Simulation: Red Team vs Blue Team Exercises"
+                ],
+                tools: ["Autopsy", "Volatility", "FTK Imager", "Wireshark", "Splunk", "ELK Stack"],
+                labs: ["SANS Forensic Challenges", "Digital Forensics CTFs", "DFIR Diva"]
+            }
+        };
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('InfoSec Navigator (English) loaded successfully.');
+
+            const generateBtn = document.getElementById('generateBtn');
+            const resultPanel = document.getElementById('resultPanel');
+            const pathSelector = document.getElementById('pathSelector');
+
+            // Generate learning path on button click
+            generateBtn.addEventListener('click', function() {
+                const selectedValue = pathSelector.value;
+
+                if (!selectedValue) {
+                    alert('Please select a focus area first!');
+                    return;
+                }
+
+                const pathData = securityPaths[selectedValue];
+                if (!pathData) {
+                    alert('Data for this path is currently unavailable.');
+                    return;
+                }
+
+                // Generate result HTML
+                let resultHTML = `
+                    <h2 class="path-title">
+                        ${pathData.title}
+                        <span class="ai-badge">AI Recommended</span>
+                    </h2>
+
+                    <div>
+                        <h3 class="section-title">📚 Learning Path (8 Core Stages)</h3>
+                        <ul class="step-list">
+                `;
+
+                pathData.steps.forEach(step => {
+                    resultHTML += `<li>${step}</li>`;
+                });
+
+                resultHTML += `
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">🛠️ Essential Tools</h3>
+                        <div class="tags-container">
+                `;
+
+                pathData.tools.forEach(tool => {
+                    resultHTML += `<span class="tag">${tool}</span>`;
+                });
+
+                resultHTML += `
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">🎯 Hands-On Labs & Platforms</h3>
+                        <div class="tags-container">
+                `;
+
+                pathData.labs.forEach(lab => {
+                    resultHTML += `<span class="tag tag-lab">${lab}</span>`;
+                });
+
+                resultHTML += `
+                        </div>
+                    </div>
+
+                    <div class="learning-tip">
+                        <strong>💡 Learning Recommendations:</strong><br><br>
+                        1. Follow the stages sequentially, completing at least one practical project per stage.<br>
+                        2. Build a personal security lab environment for practice.<br>
+                        3. Participate in CTF competitions to gain experience.<br>
+                        4. Stay updated with the latest CVEs and security news.<br>
+                        5. Consider professional certifications (e.g., OSCP, CISSP, Security+) when ready.
+                    </div>
+                `;
+
+                // Update the result panel with animation
+                resultPanel.innerHTML = resultHTML;
+                resultPanel.style.opacity = '0';
+                setTimeout(() => {
+                    resultPanel.style.transition = 'opacity 0.5s ease';
+                    resultPanel.style.opacity = '1';
+                }, 10);
+
+                // Log for debugging
+                console.log(`Generated path for: ${selectedValue}`);
+            });
+
+            // Allow Enter key to trigger generation when select is focused
+            pathSelector.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    generateBtn.click();
+                }
+            });
+        });
+
+        // Global error handling
+        window.addEventListener('error', function(event) {
+            console.error('JavaScript Error:', event.error);
+        });
+    </script>
+</body>
+</html>
