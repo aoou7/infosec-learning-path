@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息安全技能树与实战资源导航</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #4cc9f0;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #90e0ef;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 768px) {
+            .main { grid-template-columns: 1fr; }
+        }
+        .control-panel {
+           background: rgba(0, 0, 0, 0.25);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .result-panel {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 500px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #4361ee;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #e94560 0%, #d1345e 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        .path-title {
+            color: #4cc9f0;
+            border-bottom: 2px solid #4361ee;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        .step-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        .step-list li {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4361ee;
+        }
+        .section-title {
+            color: #4cc9f0;
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .tag {
+            background: rgba(233, 69, 96, 0.2);
+            color: #ff99ac;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .lab-tag {
+            background: rgba(76, 201, 240, 0.2);
+            color: #90e0ef;
+        }
+        .footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        .ai-badge {
+            background: rgba(155, 89, 182, 0.3);
+            color: #bb86fc;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .welcome-msg {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .welcome-msg h2 {
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> 信息安全技能树与实战资源导航</h1>
+            <p class="subtitle">专为信息安全专业学生设计的智能学习路径推荐系统</p>
+            <p>基于 Kimi AI 智能体构建 | 安全学习与实战资源聚合</p>
+        </header>
+
+        <div class="main">
+            <div class="control-panel">
+                <label for="pathSelect">选择信息安全方向：</label>
+                <select id="pathSelect">
+                    <option value="">-- 请选择方向 --</option>
+                    <option value="pentest">🔍 渗透测试与漏洞挖掘</option>
+                    <option value="devsecops">💻 安全开发与DevSecOps</option>
+                    <option value="netsec">🌐 网络安全与防御</option>
+                    <option value="crypto">🔐 密码学与应用安全</option>
+                    <option value="reverse">⚙️ 逆向工程与恶意分析</option>
+                    <option value="forensics">🚨 应急响应与数字取证</option>
+                </select>
+
+                <button class="btn" id="generateBtn">🚀 生成学习路径</button>
+
+                <div style="margin-top: 25px; padding: 15px; background: rgba(233, 69, 96, 0.1); border-radius: 8px; border-left: 4px solid #e94560;">
+                    <strong>⚠️ 安全伦理声明：</strong>
+                    <p style="margin-top: 8px; font-size: 14px;">本系统推荐的工具和技术仅用于合法的安全测试、教学研究和授权演练。</p>
+                </div>
+            </div>
+
+            <div class="result-panel" id="resultPanel">
+                <div class="welcome-msg">
+                    <h2>欢迎使用信息安全学习导航系统</h2>
+                   <p>请从左侧选择一个信息安全方向，然后点击"生成学习路径"按钮。</p>
+                    <p>系统将基于 Kimi AI 为您推荐个性化的学习路径、工具和实战资源。</p>
+
+                    <div style="margin-top: 40px; padding: 25px; background: rgba(76, 201, 240, 0.1); border-radius: 10px;">
+                        <h3 style="color: #4cc9f0; margin-bottom: 15px;">🎯 系统特色功能</h3>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 10px;">✓ 覆盖信息安全6大核心方向</li>
+                            <li style="margin-bottom: 10px;">✓ 推荐实用的学习路径与工具</li>
+                            <li style="margin-bottom: 10px;">✓ 提供实战靶场与练习平台</li>
+                            <li>✓ 基于 Kimi AI 智能推荐</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 信息安全学习导航系统 | 使用 Kimi AI 智能体构建 | 仅供学习与研究目的</p>
+            <p style="margin-top: 10px; font-size: 13px;">本系统为智能体作业示例，实际部署需补充更多资源和功能</p>
+        </div>
+    </div>
+
+    <script>
+        // 信息安全学习路径数据 - 简化版，确保无语法错误
+        const securityPaths = {
+            pentest: {
+                title: "🔍 渗透测试与漏洞挖掘",
+                steps: [
+                    "1. 网络协议与安全基础（TCP/IP, HTTP/HTTPS）",
+                    "2. 信息收集与侦察技术",
+                    "3. Web安全漏洞（SQL注入、XSS、CSRF等）",
+                    "4. 工具使用：Nmap, Burp Suite, Metasploit",
+                    "5. 内网渗透与权限提升",
+                    "6. 漏洞挖掘与利用编写",
+                    "7. 渗透测试报告编写",
+                    "8. 实战靶场：HackTheBox, TryHackMe"
+                ],
+                tools: ["Burp Suite", "Nmap", "Metasploit", "SQLMap", "Wireshark"],
+                labs: ["HackTheBox", "TryHackMe", "PentesterLab", "VulnHub"]
+            },
+            devsecops: {
+                title: "💻 安全开发与DevSecOps",
+                steps: [
+                    "1. 安全编码规范与最佳实践",
+                    "2. 软件开发生命周期安全",
+                    "3. SAST/DAST工具使用",
+                    "4. API安全设计与测试",
+                    "5. 容器与云原生安全",
+                    "6. CI/CD安全集成",
+                    "7. 安全架构设计",
+                    "8. 实战：OWASP WebGoat"
+                ],
+     tools: ["SonarQube", "Snyk", "Checkmarx", "OWASP ZAP", "Trivy"],
+                labs: ["SecureCodeWarrior", "OWASP Juice Shop", "Snyk Learn"]
+            },
+            netsec: {
+                title: "🌐 网络安全与防御",
+                steps: [
+                    "1. 网络协议深度解析",
+                    "2. 防火墙与IDS/IPS配置",
+                    "3. VPN与加密隧道技术",
+                    "4. 网络流量分析与监控",
+                    "5. 零信任网络架构",
+                    "6. DDoS防护技术",
+                    "7. 无线网络安全",
+                    "8. 实战：Security Onion"
+                ],
+                tools: ["Wireshark", "Zeek", "Snort", "Nessus", "pfSense"],
+                labs: ["CyberDefenders", "SANS NetWars", "HELLO实验室"]
+            },
+            crypto: {
+                title: "🔐 密码学与应用安全",
+                steps: [
+                    "1. 对称与非对称加密原理",
+                    "2. 哈希函数与数字签名",
+                    "3. PKI与数字证书",
+                    "4. SSL/TLS协议分析",
+                    "5. 区块链与加密货币安全",
+                    "6. 密码学侧信道攻击",
+                    "7. 同态加密基础",
+                    "8. 实战：Cryptopals挑战"
+                ],
+                tools: ["OpenSSL", "GnuPG", "Hashcat", "Cryptool", "Wireshark"],
+                labs: ["Cryptopals", "CryptoHack", "NahamSec密码学"]
+            },
+            reverse: {
+                title: "⚙️ 逆向工程与恶意分析",
+                steps: [
+                    "1. 汇编语言基础（x86/ARM）",
+                    "2. 调试器使用（GDB, x64dbg）",
+                    "3. 反汇编工具（IDA Pro, Ghidra）",
+"4. 软件保护与破解",
+                    "5. 恶意软件行为分析",
+                    "6. 漏洞分析技术",
+                    "7. 移动应用逆向",
+                    "8. 实战：Crackmes挑战"
+                ],
+                tools: ["IDA Pro", "Ghidra", "x64dbg", "OllyDbg", "Radare2"],
+                labs: ["Crackmes.de", "Reverse Engineering", "恶意软件分析"]
+            },
+            forensics: {
+                title: "🚨 应急响应与数字取证",
+                steps: [
+                    "1. 事件响应框架（NIST, SANS）",
+                    "2. 主机取证技术",
+                    "3. 内存取证分析",
+                    "4. 网络取证（PCAP分析）",
+                    "5. 恶意软件取证",
+                    "6. 云环境事件响应",
+                    "7. 威胁情报管理",
+                    "8. 实战：模拟红蓝对抗"
+                ],
+                tools: ["Autopsy", "Volatility", "FTK Imager", "Wireshark", "Splunk"],
+                labs: ["SANS取证挑战", "DFIR CTF", "数字取证实验"]
+            }
+        };
+
+        // 页面加载完成后执行
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成！开始初始化...');
+
+            // 获取元素
+            const generateBtn = document.getElementById('generateBtn');
+            const resultPanel = document.getElementById('resultPanel');
+            const pathSelect = document.getElementById('pathSelect');
+
+            // 检查元素是否存在
+            if (!generateBtn || !resultPanel || !pathSelect) {
+                console.error('页面元素未找到！');
+                return;
+            }
+
+            console.log('所有元素已找到，绑定事件...');
+
+            // 绑定按钮点击事件
+            generateBtn.addEventListener('click', function() {
+                const selectedValue = pathSelect.value;
+
+                if (!selectedValue) {
+                    alert('请先选择一个信息安全方向！');
+                    return;
+                }
+console.log('选择了方向:', selectedValue);
+
+                // 获取对应数据
+                const pathData = securityPaths[selectedValue];
+                if (!pathData) {
+                    alert('未找到该方向的数据！');
+                    return;
+                }
+
+                // 生成HTML内容
+                let html = `
+                    <h2 class="path-title">${pathData.title} <span class="ai-badge">Kimi AI推荐</span></h2>
+
+                    <div>
+                        <h3 class="section-title">📚 学习路径（8个核心阶段）</h3>
+                        <ul class="step-list">
+                `;
+
+                // 添加步骤
+                pathData.steps.forEach(step => {
+                    html += `<li>${step}</li>`;
+                });
+
+                html += `
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">🛠️ 核心工具推荐</h3>
+                        <div class="tags">
+                `;
+
+                // 添加工具
+                pathData.tools.forEach(tool => {
+                    html += `<span class="tag">${tool}</span>`;
+                });
+
+                html += `
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">🎯 实战靶场与练习平台</h3>
+                        <div class="tags">
+                `;
+
+                // 添加实验室
+                pathData.labs.forEach(lab => {
+                    html += `<span class="tag lab-tag">${lab}</span>`;
+                });
+
+                html += `
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(233, 69, 96, 0.1); border-radius: 8px; border-left: 4px solid #e94560;">
+                        <strong>💡 学习建议：</strong><br>
+                        1. 按照阶段顺序系统学习<br>
+                        2. 每个阶段完成至少一个实战项目<br>
+                        3. 建立个人安全实验环境<br>
+                        4. 参与CTF比赛积累经验<br>
+                        5. 关注最新安全动态与漏洞
+                    </div>
+                `;
+
+                // 更新结果面板
+                resultPanel.innerHTML = html;
+                console.log('内容已更新！');
+
+                // 添加动画效果
+                resultPanel.style.opacity = '0';
+                setTimeout(() => {
+                    resultPanel.style.transition = 'opacity 0.3s';
+                    resultPanel.style.opacity = '1';
+                }, 10);
+            });
+
+            console.log('初始化完成！按钮已绑定事件。');
+        });
+
+        // 捕获全局错误
+        window.addEventListener('error', function(event) {
+            console.error('JavaScript错误:', event.error);
+            console.error('错误位置:', event.filename, '第', event.lineno, '行');
+        });
+    </script>
+</body>
+</html>
